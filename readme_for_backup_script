@@ -2,7 +2,22 @@ The ThinkPad needs a directory called /backup (at the "/" root level) for this s
 The Digital Ocean server's IP address must not change, or this backup routine will break.  
 The Digital Ocean server must have a directory /thinkpad (at the "/" root level) for the script to work.
 
-As of rightnow passwordless SSH from the ThinkPad to the Digital Ocean server is configured.  (This is necessary for the script to work.)
+-----------------------
+Requirements that required manually configuration:
+
+#1  The ThinkPad user account engi must be able to scp files to the Digital Ocean server passwordlessly.
+#2  This user account should have passwordless elevation to sudo for the tar command.
+
+You should add this stanza to the /etc/sudoers file:
+
+engi ALL=(ALL) NOPASSWD:/usr/bin/tar
+
+---------------------
+FYI
+The backups can hang (on the /sys directory) if someone is logged in.  Ideally the backups will handle when no one is logged in late at night.  We *could* consider excluding the /sys directory from the backups.
+
+The Digital Ocean server is on UTC time.  The ThinkPad is in Eastern (NYC) time.  We may want to use NTP to enhance root cause analysis and troubleshooting.
+-------------------------
 
 To have the backup script run, the crontab job should have something like this (for running at 11:50 PM each night):
 
