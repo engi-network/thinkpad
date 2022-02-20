@@ -1,0 +1,4 @@
+To have the backup script run, the crontab job should have something like this (for running at 11:50 PM each night):
+
+# m h  dom mon dow   command
+50 23 * * * /bin/bash /home/engi/backup.sh
