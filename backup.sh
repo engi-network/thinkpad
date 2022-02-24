@@ -1,4 +1,7 @@
 # This script backups the ThinkPad
+# Here is the crontab job that runs it:
+# 00 01 * * * /bin/bash /home/engi/backup.sh
+
 backup_file="/backup/readme.txt"
 
 date > $backup_file 
