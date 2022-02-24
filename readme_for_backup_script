@@ -1,6 +1,8 @@
 The ThinkPad needs a directory called /backup (at the "/" root level) for this script to work.
 The Digital Ocean server's IP address must not change, or this backup routine will break.  
 The Digital Ocean server must have a directory /thinkpad (at the "/" root level) for the script to work.
+The Digial Ocean server has a script to rotate the backups: https://github.com/engi-network/digital_ocean_server/blob/main/rotation.sh
+Right now this rotation script runs nightly at midnight.
 
 -----------------------
 Requirements that required manually configuration:
@@ -14,12 +16,15 @@ engi ALL=(ALL) NOPASSWD:/usr/bin/tar
 
 ---------------------
 FYI
-The backups can hang (on the /sys directory) if someone is logged in.  Ideally the backups will handle when no one is logged in late at night.  We *could* consider excluding the /sys directory from the backups.
+The backups can hang (on the /sys directory) if someone is logged in.  Ideally the backups will handle when no one is logged in late at night.  
+We *could* consider excluding the /sys directory from the backups.
 
-The Digital Ocean server is on UTC time.  The ThinkPad is in Eastern (NYC) time.  We may want to use NTP to enhance root cause analysis and troubleshooting.
+The Digital Ocean server is on UTC time.  The ThinkPad is in Pacific (L.A.) time.  We may want to use NTP to enhance root cause analysis and troubleshooting.
 -------------------------
 
 To have the backup script run, the crontab job should have something like this (for running at 11:50 PM each night):
 
 # m h  dom mon dow   command
 50 23 * * * /bin/bash /home/engi/backup.sh
+
+I am experimenting with the backup script running at 1:00 AM Pacific (4:00 AM Eastern).
